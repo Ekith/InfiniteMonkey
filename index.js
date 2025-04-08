@@ -70,7 +70,7 @@ function init() {
 
     console.log("2 " + readFile("monkey.txt"));
 
-    let interval1 = window.setInterval(addChar, 10);
+    let interval1 = window.setInterval(addChar, 1);
 
     if (pause) {
         document.getElementById("pauseButton").innerHTML = "Pause";
@@ -78,6 +78,15 @@ function init() {
     else {
         document.getElementById("pauseButton").innerHTML = "Play";
     }
+
+    document.getElementById("nbWords").innerHTML = "All";
+    document.getElementById("all").disabled = true;
+    document.getElementById("1000").disabled = false;
+    document.getElementById("100").disabled = false;
+
+
+
+
 
 
     document.getElementById("pauseButton").addEventListener("click", function () {
