@@ -66,6 +66,11 @@ p {
     word-wrap: break-word;
 }
 
+#monkeyText {
+    overflow-y: scroll;
+    height: 2%;
+}
+
 /* Label styles */
 label {
     font-weight: 600;

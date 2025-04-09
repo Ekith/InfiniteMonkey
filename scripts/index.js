@@ -1,4 +1,14 @@
-const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+
+const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const specialChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+const numbers = '0123456789';
+const specialCase = "éèêëôîïçàâä";
+
+
+
+const alphabet = lowerCase + upperCase + specialChars + numbers;
 
 
 window.addEventListener("DOMContentLoaded",init)
@@ -33,10 +43,10 @@ function writePage(text) {
     if (pause === false)
         if (maxChar > 0) {
             let len = text.length;
-            document.getElementById("monkey").innerHTML = text.substring(len - maxChar, len)
+            document.getElementById("monkeyText").innerHTML = text.substring(len - maxChar, len)
         }
         else {
-            document.getElementById("monkey").innerHTML = text;
+            document.getElementById("monkeyText").innerHTML = text;
         }
     document.getElementById("nbChar").innerHTML = text.length;
 }
