@@ -30,7 +30,7 @@ function writeFile(filename, data) {
 
 
 function writePage(text) {
-    if (pause == false)
+    if (pause === false)
         if (maxChar > 0) {
             let len = text.length;
             document.getElementById("monkey").innerHTML = text.substring(len - maxChar, len)
@@ -57,6 +57,52 @@ function searchInStr(part) {
 }
 
 
+function buttonTruncate(listNumber) {
+    for (let i=0; i < listNumber.length; i++) {
+        let buttons = document.getElementById("charInfos");
+        let button1 = document.createElement("button");
+        button1.id = listNumber[i] + "";
+        button1.innerHTML = listNumber[i];
+        buttons.appendChild(button1);
+
+        button1.addEventListener("click", function () {
+            document.getElementById("nbWords").innerHTML = listNumber[i];
+
+            document.getElementById("all").disabled = false;
+            for (let j=0; j < listNumber.length; j++) {
+                document.getElementById(listNumber[j]).disabled = j === i;
+            }
+            maxChar = listNumber[i];
+        });
+    }
+    document.getElementById("all").addEventListener("click", function () {
+        document.getElementById("nbWords").innerHTML = "All";
+
+        document.getElementById("all").disabled = true;
+        for (let j=0; j < listNumber.length; j++) {
+            document.getElementById(listNumber[j] + "").disabled = false;
+        }
+
+        maxChar = 0
+    });
+}
+
+function usefulButton() {
+    document.getElementById("pauseButton").addEventListener("click", function () {
+    pause = !pause;
+    if (pause) {
+        document.getElementById("pauseButton").innerHTML = "Play display";
+    }
+    else {
+        document.getElementById("pauseButton").innerHTML = "Pause display";
+    }
+    });
+    document.getElementById("searchButton").addEventListener("click", function () {
+        searchInStr(document.getElementById("searchInput").value);
+    });
+}
+
+
 function addChar() {
     let newChar = generateRandomChar(alphabet);
     monkey += newChar;
@@ -65,69 +111,24 @@ function addChar() {
 }
 
 
+
+
 function init() {
-
-
-    console.log("2 " + readFile("monkey.txt"));
 
     let interval1 = window.setInterval(addChar, 1);
 
     if (pause) {
-        document.getElementById("pauseButton").innerHTML = "Pause";
+        document.getElementById("pauseButton").innerHTML = "Play display";
     }
     else {
-        document.getElementById("pauseButton").innerHTML = "Play";
+        document.getElementById("pauseButton").innerHTML = "Pause display";
     }
 
+
+    buttonTruncate([10, 100, 500, 1000, 5000, 10000])
     document.getElementById("nbWords").innerHTML = "All";
     document.getElementById("all").disabled = true;
-    document.getElementById("1000").disabled = false;
-    document.getElementById("100").disabled = false;
 
-
-
-
-
-
-    document.getElementById("pauseButton").addEventListener("click", function () {
-        pause = !pause;
-        if (pause) {
-            document.getElementById("pauseButton").innerHTML = "Pause";
-        }
-        else {
-            document.getElementById("pauseButton").innerHTML = "Play";
-        }
-    });
-    document.getElementById("searchButton").addEventListener("click", function () {
-       searchInStr(document.getElementById("searchInput").value);
-    });
-    document.getElementById("all").addEventListener("click", function () {
-        document.getElementById("nbWords").innerHTML = "All";
-
-        document.getElementById("all").disabled = true;
-        document.getElementById("1000").disabled = false;
-        document.getElementById("100").disabled = false;
-
-        maxChar = 0
-    });
-    document.getElementById("1000").addEventListener("click", function () {
-        document.getElementById("nbWords").innerHTML = "1000";
-
-        document.getElementById("all").disabled = false;
-        document.getElementById("1000").disabled = true;
-        document.getElementById("100").disabled = false;
-
-        maxChar = 1000
-    });
-    document.getElementById("100").addEventListener("click", function () {
-        document.getElementById("nbWords").innerHTML = "100";
-
-        document.getElementById("all").disabled = false;
-        document.getElementById("1000").disabled = false;
-        document.getElementById("100").disabled = true;
-
-        maxChar = 100
-    });
-
+    usefulButton()
 
 }
