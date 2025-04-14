@@ -40,6 +40,7 @@ function writeFile(filename, data) {
 
 
 function writePage(text) {
+    document.getElementById("monkeyText").innerHTML = "";
     if (pause === false)
         if (maxChar > 0) {
             let len = text.length;
@@ -135,12 +136,14 @@ function usefulButton() {
 
 
 function addChar() {
-    let newChar = generateRandomChar(alphabet);
-    monkey += newChar;
-    let monkeyWithHighlight = searchInStr(monkey);
-    writePage(monkeyWithHighlight);
-    console.log(monkey);
-    // writeFile("monkey.txt", newChar);
+    if (pause === false) {
+        let newChar = generateRandomChar(alphabet);
+        monkey += newChar;
+        let monkeyWithHighlight = searchInStr(monkey);
+        writePage(monkeyWithHighlight);
+        console.log(monkey);
+        // writeFile("monkey.txt", newChar);
+    }
 }
 
 
@@ -150,7 +153,7 @@ function init() {
 
     console.log("init".indexOf("te") + "relteg gblhnjgrhmpenjrgj");
 
-    let interval1 = window.setInterval(addChar, 1000);
+    let interval1 = window.setInterval(addChar, 100);
 
     if (pause) {
         document.getElementById("pauseButton").innerHTML = "Play display";
