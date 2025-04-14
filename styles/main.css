@@ -20,6 +20,11 @@ body {
     padding: 1rem;
 }
 
+/* General styles */
+.highlight {
+    background-color: yellow;
+}
+
 /* Header */
 header {
     display: flex;

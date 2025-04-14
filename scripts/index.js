@@ -8,7 +8,7 @@ const specialCase = "éèêëôîïçàâä";
 
 
 
-const alphabet = lowerCase + upperCase + specialChars + numbers;
+const alphabet = lowerCase + upperCase + specialChars + numbers + specialCase;
 
 
 window.addEventListener("DOMContentLoaded",init)
@@ -51,19 +51,43 @@ function writePage(text) {
     document.getElementById("nbChar").innerHTML = text.length;
 }
 
-function searchInStr(part) {
+
+
+function allIndex(str, part) {
+    let indices = [];
+    let index = str.indexOf(part);
+    while (index < str.length && index > 0) {
+        indices.push(index);
+        index = str.indexOf(part, index + part.length);
+    }
+    return indices;
+}
+
+
+function searchInStr(strComp) {
+    let part = document.getElementById("searchInput").value;
+
+    let indices = allIndex(strComp, part);
     if (part !== "") {
-        let strComp = document.getElementById("monkey").innerHTML;
-        if (strComp.includes(part)) {
+        if (indices.length > 0) {
             document.getElementById("resSearch").innerHTML = "Trouvé";
-        }
-        else {
+            // console.log(indices);
+            let res = strComp.substring(0, indices[0]);
+            for (let i = 0; i < indices.length - 1; i++) {
+                res += "<span class='highlight'>" + strComp.substring(indices[i], indices[i] + part.length) + "</span>";
+                res += strComp.substring(indices[i] + part.length, indices[i + 1]);
+            }
+            res += "<span class='highlight'>" + strComp.substring(indices[indices.length - 1], indices[indices.length - 1] + part.length) + "</span>";
+            res += strComp.substring(indices[indices.length - 1] + part.length, strComp.length);
+            return res;
+        } else {
             document.getElementById("resSearch").innerHTML = "Non trouvé";
         }
     }
     else {
         document.getElementById("resSearch").innerHTML = "";
     }
+    return strComp;
 }
 
 
@@ -107,17 +131,16 @@ function usefulButton() {
         document.getElementById("pauseButton").innerHTML = "Pause display";
     }
     });
-    document.getElementById("searchButton").addEventListener("click", function () {
-        searchInStr(document.getElementById("searchInput").value);
-    });
 }
 
 
 function addChar() {
     let newChar = generateRandomChar(alphabet);
     monkey += newChar;
-    writePage(monkey);
-    writeFile("monkey.txt", newChar);
+    let monkeyWithHighlight = searchInStr(monkey);
+    writePage(monkeyWithHighlight);
+    console.log(monkey);
+    // writeFile("monkey.txt", newChar);
 }
 
 
@@ -125,7 +148,9 @@ function addChar() {
 
 function init() {
 
-    let interval1 = window.setInterval(addChar, 1);
+    console.log("init".indexOf("te") + "relteg gblhnjgrhmpenjrgj");
+
+    let interval1 = window.setInterval(addChar, 1000);
 
     if (pause) {
         document.getElementById("pauseButton").innerHTML = "Play display";
