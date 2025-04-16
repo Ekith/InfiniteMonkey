@@ -144,15 +144,13 @@ function usefulButton() {
 
 
 function addChar() {
-    if (pause === false) {
-        let newChar = generateRandomChar(alphabet);
-        monkey += newChar;
-        let part = document.getElementById("searchInput").value;
-        let monkeyWithHighlight = searchInStr(monkey, part);
-        writePage(monkeyWithHighlight);
-        console.log(monkey);
-        // writeFile("monkey.txt", newChar);
-    }
+    let newChar = generateRandomChar(alphabet);
+    monkey += newChar;
+    let part = document.getElementById("searchInput").value;
+    let monkeyWithHighlight = searchInStr(monkey, part);
+    writePage(monkeyWithHighlight);
+    console.log(monkey);
+    // writeFile("monkey.txt", newChar);
 }
 
 
