@@ -27,6 +27,15 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+// Escaping for Insertion in HTML
+function escapeForHTML(str) {
+    return str.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 
 
 // return the content of the file give in argument
@@ -65,21 +74,20 @@ function allIndex(str, part) {
 }
 
 
-function searchInStr(strComp) {
-    let part = document.getElementById("searchInput").value;
-
-    let indices = allIndex(strComp, part);
-    if (part !== "") {
+function searchInStr(strComp, strPart) {
+    let newStrComp = escapeForHTML(strComp);
+    let indices = allIndex(newStrComp, strPart);
+    if (strPart !== "") {
         if (indices.length > 0) {
             document.getElementById("resSearch").innerHTML = "Trouvé";
             // console.log(indices);
-            let res = strComp.substring(0, indices[0]);
+            let res = newStrComp.substring(0, indices[0]);
             for (let i = 0; i < indices.length - 1; i++) {
-                res += "<span class='highlight'>" + strComp.substring(indices[i], indices[i] + part.length) + "</span>";
-                res += strComp.substring(indices[i] + part.length, indices[i + 1]);
+                res += "<span class='highlight'>" + newStrComp.substring(indices[i], indices[i] + strPart.length) + "</span>";
+                res += newStrComp.substring(indices[i] + strPart.length, indices[i + 1]);
             }
-            res += "<span class='highlight'>" + strComp.substring(indices[indices.length - 1], indices[indices.length - 1] + part.length) + "</span>";
-            res += strComp.substring(indices[indices.length - 1] + part.length, strComp.length);
+            res += "<span class='highlight'>" + newStrComp.substring(indices[indices.length - 1], indices[indices.length - 1] + strPart.length) + "</span>";
+            res += newStrComp.substring(indices[indices.length - 1] + strPart.length, newStrComp.length);
             return res;
         } else {
             document.getElementById("resSearch").innerHTML = "Non trouvé";
@@ -88,7 +96,7 @@ function searchInStr(strComp) {
     else {
         document.getElementById("resSearch").innerHTML = "";
     }
-    return strComp;
+    return newStrComp;
 }
 
 
@@ -139,7 +147,8 @@ function addChar() {
     if (pause === false) {
         let newChar = generateRandomChar(alphabet);
         monkey += newChar;
-        let monkeyWithHighlight = searchInStr(monkey);
+        let part = document.getElementById("searchInput").value;
+        let monkeyWithHighlight = searchInStr(monkey, part);
         writePage(monkeyWithHighlight);
         console.log(monkey);
         // writeFile("monkey.txt", newChar);
