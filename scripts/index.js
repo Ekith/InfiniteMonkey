@@ -27,6 +27,21 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+function calculateProbability(str) {
+    let prob = 1;
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charAt(i);
+        let index = alphabet.indexOf(char);
+        if (index !== -1) {
+            prob *= 1 / alphabet.length;
+        } else {
+            prob *= 0;
+        }
+    }
+    return prob;
+}
+
+
 // Escaping for Insertion in HTML
 function escapeForHTML(str) {
     return str.replace(/&/g, "&amp;")
@@ -35,6 +50,7 @@ function escapeForHTML(str) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
 
 
 
@@ -61,7 +77,6 @@ function writePage(text) {
 }
 
 
-
 function allIndex(str, part) {
     let indices = [];
     let index = str.indexOf(part);
@@ -78,7 +93,8 @@ function searchInStr(strComp, strPart) {
     let indices = allIndex(newStrComp, strPart);
     if (strPart !== "") {
         if (indices.length > 0) {
-            document.getElementById("resSearch").innerHTML = "Trouvé";
+            document.getElementById("resSearch").innerHTML = "Trouvé (x" + indices.length + ")";
+            document.getElementById("proba").innerHTML = "Probability : " + calculateProbability(strPart);
             // console.log(indices);
             let res = newStrComp.substring(0, indices[0]);
             for (let i = 0; i < indices.length - 1; i++) {
@@ -90,10 +106,12 @@ function searchInStr(strComp, strPart) {
             return res;
         } else {
             document.getElementById("resSearch").innerHTML = "Non trouvé";
+            document.getElementById("proba").innerHTML = "Probability : " + calculateProbability(strPart);
         }
     }
     else {
         document.getElementById("resSearch").innerHTML = "";
+        document.getElementById("proba").innerHTML = "";
     }
     return newStrComp;
 }
@@ -157,6 +175,8 @@ function addChar() {
 function init() {
 
     let interval1 = window.setInterval(addChar, 100);
+
+    document.getElementById("alphabetText").innerHTML += " " + alphabet;
 
     if (pause) {
         document.getElementById("pauseButton").innerHTML = "Play display";
