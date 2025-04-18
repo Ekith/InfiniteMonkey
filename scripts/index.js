@@ -176,7 +176,7 @@ function init() {
 
     let interval1 = window.setInterval(addChar, 100);
 
-    document.getElementById("alphabetText").innerHTML += " " + alphabet;
+    document.getElementById("alphabetText").innerHTML += " " + alphabet + " (" + alphabet.length + " chars)";
 
     if (pause) {
         document.getElementById("pauseButton").innerHTML = "Play display";
