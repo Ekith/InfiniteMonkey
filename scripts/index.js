@@ -2,7 +2,7 @@
 
 const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
 const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const specialChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+const specialChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ ';
 const numbers = '0123456789';
 const specialCase = "éèêëôîïçàâä";
 
@@ -49,7 +49,6 @@ function writeFile(filename, data) {
 
 
 function writePage(text) {
-    document.getElementById("monkeyText").innerHTML = "";
     if (pause === false)
         if (maxChar > 0) {
             let len = text.length;
@@ -155,10 +154,7 @@ function addChar() {
 
 
 
-
 function init() {
-
-    console.log("init".indexOf("te") + "relteg gblhnjgrhmpenjrgj");
 
     let interval1 = window.setInterval(addChar, 100);
 
