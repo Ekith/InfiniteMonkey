@@ -16,6 +16,7 @@ window.addEventListener("DOMContentLoaded",init)
 let monkey = ""
 let maxChar = 0
 let pause = false
+let personalizeMode = false;
 
 function generateRandomChar(alphabet) {
     let n = alphabet.length;
@@ -132,7 +133,12 @@ function buttonTruncate(listNumber) {
             for (let j=0; j < listNumber.length; j++) {
                 document.getElementById(listNumber[j]).disabled = j === i;
             }
+            document.getElementById("personalize").disabled = false;
             maxChar = listNumber[i];
+
+            document.getElementById("personalizeEntry").disabled = true;
+            personalizeMode = false;
+
         });
     }
     document.getElementById("all").addEventListener("click", function () {
@@ -142,9 +148,54 @@ function buttonTruncate(listNumber) {
         for (let j=0; j < listNumber.length; j++) {
             document.getElementById(listNumber[j] + "").disabled = false;
         }
-
+        document.getElementById("personalize").disabled = false;
         maxChar = 0
+
+        document.getElementById("personalizeEntry").disabled = true;
+        personalizeMode = false;
     });
+
+    let buttons = document.getElementById("charInfos");
+    let button1 = document.createElement("button");
+    button1.id = "personalize"
+    button1.innerHTML = "Personalize";
+    buttons.appendChild(button1);
+
+    let input1 = document.createElement("input");
+    input1.id = "personalizeEntry";
+    input1.type = "text"
+    input1.value = "100";
+    input1.onchange = function () {
+        let value = input1.value;
+        if (value <= 0 || isNaN(parseInt(value))) {
+            value = 1;
+            input1.value = value;
+        }
+        if (input1.value === "") {
+            maxChar = 100;
+        }
+        else {
+            maxChar = parseInt(value);
+        }
+        document.getElementById("nbWords").innerHTML = "Personalize - " + maxChar;
+    }
+    buttons.appendChild(input1);
+
+    document.getElementById("personalize").addEventListener("click", function () {
+        maxChar = document.getElementById("personalizeEntry").value;
+        document.getElementById("nbWords").innerHTML = "Personalize - " + maxChar;
+
+        document.getElementById("all").disabled = false;
+        for (let j=0; j < listNumber.length; j++) {
+            document.getElementById(listNumber[j]).disabled = false;
+        }
+        document.getElementById("personalize").disabled = true;
+
+        document.getElementById("personalizeEntry").disabled = false;
+        personalizeMode = true;
+    })
+
+
 }
 
 function usefulButton() {
@@ -189,6 +240,7 @@ function init() {
     buttonTruncate([10, 100, 500, 1000, 5000, 10000])
     document.getElementById("nbWords").innerHTML = "All";
     document.getElementById("all").disabled = true;
+    document.getElementById("personalizeEntry").disabled = true;
 
     usefulButton()
 

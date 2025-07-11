@@ -109,6 +109,14 @@ input[type="text"] {
     border-radius: 6px;
     margin-bottom: 0.5rem;
 }
+input[type="number"] {
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
 
 /* Responsive tweaks */
 @media (max-width: 600px) {
@@ -173,5 +181,12 @@ input[type="text"] {
         background-color: #2b2b2b;
         color: #e0e0e0;
         border: 1px solid #555;
+    }
+
+    input[type="number"] {
+        background-color: #2b2b2b;
+        color: #e0e0e0;
+        border: 1px solid #555;
+
     }
 }
