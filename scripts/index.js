@@ -13,6 +13,8 @@ const alphabet = lowerCase + upperCase + specialChars + numbers + specialCase;
 
 window.addEventListener("DOMContentLoaded",init)
 
+let interval1
+
 let monkey = ""
 let maxChar = 0
 let pause = false
@@ -210,6 +212,8 @@ function usefulButton() {
     });
 }
 
+function
+
 
 function addChar() {
     let newChar = generateRandomChar(alphabet);
@@ -225,7 +229,8 @@ function addChar() {
 
 function init() {
 
-    let interval1 = window.setInterval(addChar, 100);
+    interval1 = window.setInterval(addChar, 100);
+
 
     document.getElementById("alphabetText").innerHTML += " " + alphabet + " (" + alphabet.length + " chars)";
 
