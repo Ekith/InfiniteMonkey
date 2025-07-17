@@ -19,6 +19,7 @@ let monkey = ""
 let maxChar = 0
 let pause = false
 let personalizeMode = false;
+const timerSpeedDefault = 0.1
 
 function generateRandomChar(alphabet) {
     let n = alphabet.length;
@@ -202,17 +203,36 @@ function buttonTruncate(listNumber) {
 
 function usefulButton() {
     document.getElementById("pauseButton").addEventListener("click", function () {
-    pause = !pause;
-    if (pause) {
-        document.getElementById("pauseButton").innerHTML = "Play display";
-    }
-    else {
-        document.getElementById("pauseButton").innerHTML = "Pause display";
-    }
+        pause = !pause;
+        if (pause) {
+            document.getElementById("pauseButton").innerHTML = "Play display";
+        }
+        else {
+            document.getElementById("pauseButton").innerHTML = "Pause display";
+        }
     });
 }
 
-function
+function create_input_interval(){
+    let input_speed = document.getElementById("intervalSpeed")
+    input_speed.value = timerSpeedDefault;
+    input_speed.onchange = function () {
+        let value
+        if (input_speed.value === "") {
+            value = 0.5;
+        }
+        else if (parseInt(input_speed.value) < 0) {
+            input_speed.value = 0.5;
+            value = 0.5;
+        }
+        else {
+            value = parseInt(input_speed.value);
+        }
+
+        clearInterval(interval1);
+        interval1 = setInterval(addChar, value*1000)
+    }
+}
 
 
 function addChar() {
@@ -229,8 +249,7 @@ function addChar() {
 
 function init() {
 
-    interval1 = window.setInterval(addChar, 100);
-
+    interval1 = window.setInterval(addChar, timerSpeedDefault*1000);
 
     document.getElementById("alphabetText").innerHTML += " " + alphabet + " (" + alphabet.length + " chars)";
 
@@ -246,6 +265,8 @@ function init() {
     document.getElementById("nbWords").innerHTML = "All";
     document.getElementById("all").disabled = true;
     document.getElementById("personalizeEntry").disabled = true;
+
+    create_input_interval()
 
     usefulButton()
 
