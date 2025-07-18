@@ -31,7 +31,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-function calculateProbability(str) {
+function calculateProbabilityOld(str) {
     let prob = 1;
     for (let i = 0; i < str.length; i++) {
         let char = str.charAt(i);
@@ -45,6 +45,10 @@ function calculateProbability(str) {
     return prob;
 }
 
+function calculateProbability(str) {
+    return 1-Math.pow(1-1/Math.pow(alphabet.length, str.length), monkey.length-str.length+1);
+}
+
 
 // Escaping for Insertion in HTML
 function escapeForHTML(str) {
@@ -56,16 +60,6 @@ function escapeForHTML(str) {
 }
 
 
-
-
-// return the content of the file give in argument
-function readFile(filename) {
-    return 'Gnagnagna'
-}
-// write data into a github file
-function writeFile(filename, data) {
-
-}
 
 
 function writePage(text) {
